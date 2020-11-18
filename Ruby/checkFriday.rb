@@ -16,4 +16,5 @@ end
 return first 
 end
 
+# If given a date return the date of the next friday the 13th.
 
