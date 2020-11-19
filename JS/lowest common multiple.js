@@ -1,16 +1,19 @@
 function smallestCommons(arr) {
     let min = Math.min(...arr)
     let max = Math.max(...arr)
-    let n = max* (max-1)
     let array = []
-  
+
+    //   Creating a full array of all values
     for (min; min<=max; min++){
-      array.push(min)
+        array.push(min)
     }
-  
+    
     const lowestCommon = (currentValue) => n % currentValue === 0;
     let common = false
-  
+    let n = max* (max-1)
+
+    common =  array.every(lowestCommon)
+    
     while (common === false){
     n++
     common =  array.every(lowestCommon)

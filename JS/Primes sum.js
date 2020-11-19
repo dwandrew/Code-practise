@@ -17,7 +17,6 @@ function sumPrimes(num) {
       }
     
     }
-    
       const reducer = (accumulator, currentValue) => accumulator + currentValue;
       let total = primes.reduce(reducer)
       return total;
