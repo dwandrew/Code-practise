@@ -1,9 +1,8 @@
 require 'Prime'
 def sum_primes(n)
-total =  Prime.each(n).sum
-puts total
-return total
+Prime.each(n).sum
 end
 
-sum_primes(100)
-sum_primes(10)
+
+puts sum_primes(100)
+puts sum_primes(10)
