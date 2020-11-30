@@ -1,30 +1,28 @@
+# @param {Integer[]} digits
+# @return {Integer[]}
 def plus_one(digits)
     digits.reverse!()
-    
     index = 0
     while index< digits.length 
         if index == 0
             digits[index] +=1
         elsif digits[index-1] == 10
-                digits[index] +=1
-        else 
-            digits[index]
+            digits[index] +=1
         end
         index+=1
     end
     
-        if digits.rindex(10) && digits.rindex(10) == (digits.length-1)
-            index = digits.rindex(10)
-            digits[index] = 1
-            digits.unshift(0)
-        else 
-            digits
-        end
+    if digits.rindex(10) && digits.rindex(10) == (digits.length-1)
+        index = digits.rindex(10)
+        digits[index] = 1
+        digits.unshift(0)
+    end
     
     until !digits.find_index(10)
         index = digits.find_index(10)
         digits[index] = 0
     end
+    
    digits.reverse()
 end
 
