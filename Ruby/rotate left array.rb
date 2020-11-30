@@ -14,6 +14,17 @@ def rotRight(a, d)
     a.unshift(slice).flatten
 end
 
+# Other rotate right option however this is for number of goes
+def rotate(nums, k)
+    if nums.length > 1
+        until k == 0
+            popped = nums.pop()
+            nums.unshift(popped)
+            k-=1
+        end
+    end
+    nums
+end
     
 # A left rotation operation on an array shifts each of the array's elements  unit to the left. For example, if  left rotations are performed on array , then the array would become .
 
