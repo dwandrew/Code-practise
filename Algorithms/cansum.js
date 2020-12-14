@@ -4,7 +4,9 @@
 
 const canSum = (target, numbers) => {
     if (target === 0) return true
+    
     if(target < 0) return false
+
     for (let num of numbers){
         const remainder = target - num
         if (canSum(remainder, numbers) === true) {
