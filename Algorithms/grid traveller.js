@@ -9,3 +9,12 @@ const gridTraveler = (r,c) => {
 }
 
 console.log(gridTraveler(3,2))
+console.log(gridTraveler(12,2))
+console.log(gridTraveler(4,6))
+
+const gridTraveler_two = (r,c, memo = {}) => {
+    if (r ===1 && c === 1) return 1;
+    if (r === 0 || c=== 0 ) return 0;
+    
+    return gridTraveler_two(r-1, c) + gridTraveler_two(r, c-1);
+}
