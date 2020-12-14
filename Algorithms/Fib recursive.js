@@ -1,3 +1,5 @@
+// Calcutale the nth fib number
+
 // O(2^n)
 
 const fib = (n) => {
