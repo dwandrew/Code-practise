@@ -39,3 +39,4 @@ const howSum_two = (target, numbers, memo = {}) => {
 console.log(howSum_two(7, [5,3,4,7]))
 console.log(howSum_two(8, [5,3,4,7]))
 console.log(howSum_two(1220, [5,3,4,7]))
+console.log(howSum_two(4, [5,3]))
