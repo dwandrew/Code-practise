@@ -111,58 +111,29 @@ return final.toFixed(2)
 // console.log(tax(200000, rates, thresholds, twenty_nineteen_twenty_hash))
 // console.log(tax(200000, rates, thresholds, twenty_twenty_twentyone_hash))
 
-// Nat insurance inverse 
+// Take home pay calculator monthly take home
 
-const inverse_nat_ins = (n, nat_insurance_hash) => {
-    let final
-    if (n <= nat_insurance_hash["lower_limit"]){
-        final = n
-    }
-    else if (n <= nat_insurance_hash["upper_limit"]){
-        let twelve_percent = n - nat_insurance_hash["lower_limit"]
-        let total = twelve_percent / 0.88
-        total += nat_insurance_hash["lower_limit"]
-        final = total
-    }
-    else {
-        let twelve_percent = (nat_insurance_hash["upper_limit"] - nat_insurance_hash["lower_limit"])
-        twelve_percent = twelve_percent / 0.88
-        n = n - nat_insurance_hash["upper_limit"]
-        let total = n / 0.98
-        total += twelve_percent
-        total += nat_insurance_hash["lower_limit"]
-        final =total
-    }
-    return final
-}
-
-console.log(inverse_nat_ins(719, twenty_nineteen_twenty_hash))
-console.log(inverse_nat_ins(3000, twenty_nineteen_twenty_hash))
-console.log(inverse_nat_ins(5000, twenty_nineteen_twenty_hash))
-
-// Take home pay calculator
 
 const take_home_pay_monthly = (n, rates, thresholds, nat_insurance_hash) => {
     let yearly = n * 12
-    let min_nat_ins = nat_insurance(12500, nat_insurance_hash)
-    if (n <= nat_insurance_hash["lower_limit"]) {
-        return n * 12
+    let taxed =tax(yearly, rates, thresholds, nat_insurance_hash)
+    let monthly = taxed/12
+    for(yearly; monthly < n; yearly+=100){
+        taxed =tax(yearly, rates, thresholds, nat_insurance_hash)
+        monthly = taxed/12
     }
-    else if (yearly <= min_nat_ins){
-        return n* 12
-    }
-    else if (yearly <=thresholds["basic"]){
-        let allowance = 12500
-        let total = yearly - allowance
-        total /= 1- rates["basic_rate"]
-        total += allowance 
-
-        
-    }
-
-
+    return yearly
 }
 
-// console.log(take_home_pay_monthly(719, rates, thresholds, twenty_nineteen_twenty_hash))
-// console.log(take_home_pay_monthly(1000, rates, thresholds, twenty_nineteen_twenty_hash))
-// console.log(take_home_pay_monthly(2286.71, rates, thresholds, twenty_nineteen_twenty_hash))
+// Take home pay calculator yearly take home
+
+
+const take_home_pay_yearly = (n, rates, thresholds, nat_insurance_hash) => {
+    let taxed =tax(n, rates, thresholds, nat_insurance_hash)
+    let target = n
+    for(n;  taxed < target; n+=500){
+        taxed =tax(n, rates, thresholds, nat_insurance_hash)
+    }
+    return n
+}
+console.log(take_home_pay_yearly(35000, rates, thresholds, twenty_twenty_twentyone_hash))
