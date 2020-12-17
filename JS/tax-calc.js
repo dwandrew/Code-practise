@@ -43,7 +43,7 @@ const personal_allowance = (n, allowance) => {
         let over = n - 100000
         let reduction = Math.floor(over/2)
         allowance -= reduction
-        return allowance
+        return allowance <= 0 ? 0 : allowance
     }
     else {
         return allowance}
@@ -57,16 +57,44 @@ let rates = {"basic_rate": 0.2, "higher_rate": 0.4, "additional_rate": 0.45 }
 let thresholds = {"lowest": 12500, "basic": 50000, "higher": 150000}
 
 const tax = (n, rates, thresholds, nat_insurance_hash) => {
-let nat_ins = nat_insurance(n, nat_insurance_hash)
+let final
+let nat_ins_deductions = n -nat_insurance(n, nat_insurance_hash)
 let allowance = personal_allowance(n, 12500)
 
 if (n<= thresholds["lowest"]) {
-    return nat_ins
+    let total = n - nat_ins_deductions
+    final = total 
+}
+else if (n <= thresholds["basic"]){
+    let taxable = n - allowance
+    let total = taxable - (taxable * rates["basic_rate"])
+    total -= nat_ins_deductions
+    total += allowance
+    final = total
+}
+else if (n <= thresholds["higher"]) {
+    let taxable = n - allowance
+    let basic = thresholds["basic"] - 12500
+    let higher = taxable - basic
+    basic -= basic * rates["basic_rate"]
+    higher -= higher * rates["higher_rate"]
+    let total = basic + higher + allowance
+    total -= nat_ins_deductions
+    final = total
+}
+else {
+    
 }
 
 
+return final
 }
 
-// console.log(tax(12500, rates, thresholds, twenty_twenty_twentyone_hash))
-// // console.log(tax(125000, rates, thresholds))
-// // console.log(tax(17500, rates, thresholds))
+// tax(12500, rates, thresholds, twenty_nineteen_twenty_hash)
+// // tax(100000, rates, thresholds, twenty_nineteen_twenty_hash)
+// console.log(tax(12500, rates, thresholds, twenty_nineteen_twenty_hash))
+// console.log(tax(50000, rates, thresholds, twenty_nineteen_twenty_hash))
+// console.log(tax(50000, rates, thresholds, twenty_twenty_twentyone_hash))
+console.log(tax(150000, rates, thresholds, twenty_twenty_twentyone_hash))
+console.log(tax(149000, rates, thresholds, twenty_twenty_twentyone_hash))
+console.log(tax(100000, rates, thresholds, twenty_twenty_twentyone_hash))
