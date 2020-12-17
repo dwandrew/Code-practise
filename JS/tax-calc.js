@@ -56,6 +56,8 @@ const personal_allowance = (n, allowance) => {
 let rates = {"basic_rate": 0.2, "higher_rate": 0.4, "additional_rate": 0.45 }
 let thresholds = {"lowest": 12500, "basic": 50000, "higher": 150000}
 
+// final tax calculator
+
 const tax = (n, rates, thresholds, nat_insurance_hash) => {
 let final
 let nat_ins_deductions = n -nat_insurance(n, nat_insurance_hash)
@@ -83,7 +85,15 @@ else if (n <= thresholds["higher"]) {
     final = total
 }
 else {
-    
+    let basic = thresholds["basic"] - 12500
+    let higher = thresholds["higher"] - basic
+    let additional = n - thresholds["higher"]
+    basic -= basic * rates["basic_rate"]
+    higher -= higher * rates["higher_rate"]
+    additional -= additional * rates["additional_rate"]
+    let total = basic + higher + additional + allowance
+    total -= nat_ins_deductions
+    final = total
 }
 
 
@@ -95,6 +105,8 @@ return final
 // console.log(tax(12500, rates, thresholds, twenty_nineteen_twenty_hash))
 // console.log(tax(50000, rates, thresholds, twenty_nineteen_twenty_hash))
 // console.log(tax(50000, rates, thresholds, twenty_twenty_twentyone_hash))
-console.log(tax(150000, rates, thresholds, twenty_twenty_twentyone_hash))
-console.log(tax(149000, rates, thresholds, twenty_twenty_twentyone_hash))
-console.log(tax(100000, rates, thresholds, twenty_twenty_twentyone_hash))
+// console.log(tax(150000, rates, thresholds, twenty_twenty_twentyone_hash))
+// console.log(tax(149000, rates, thresholds, twenty_twenty_twentyone_hash))
+// console.log(tax(100000, rates, thresholds, twenty_twenty_twentyone_hash))
+console.log(tax(200000, rates, thresholds, twenty_nineteen_twenty_hash))
+console.log(tax(200000, rates, thresholds, twenty_twenty_twentyone_hash))
